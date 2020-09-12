@@ -19,9 +19,9 @@ LIBROSA_COEFFICIENT = 32767
 ERROR_FILE_NOT_FOUND = "file %s does not exists"
 
 
-def split_wav_buffer(chunks):
+def split_chunks(chunks):
     """
-        split_wav_buffer(chunks) -> splits the wav buffer into list of chunk list, each chunk
+        split_chunks(chunks) -> Return list of audio segments (chunks)
     """
 
     audio_segments = []
@@ -93,8 +93,8 @@ def main():
     wav_buffer = np.hstack((wav_buffer, np.zeros(CHUNK_SIZE - int(len(wav_buffer) % CHUNK_SIZE))))
 
     chunks = wav_buffer.reshape(len(wav_buffer) // CHUNK_SIZE, CHUNK_SIZE)
-    audio_segments = split_wav_buffer(chunks)
-    print(args.fit)
+    audio_segments = split_chunks(chunks)
+
     if args.fit:
         audio_segments = fit_audio_segments(audio_segments)
     print("%s audio segments detected" % len(audio_segments))
